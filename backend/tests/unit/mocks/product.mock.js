@@ -12,6 +12,7 @@ const mockProducts = [
     name: 'Escudo do CapitÃ£o AmÃ©rica',
   },
 ];
+
 const mockProductsStatus = {
   status: 'SUCCESSFULL',
   data: mockProducts,
