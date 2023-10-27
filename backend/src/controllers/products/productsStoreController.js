@@ -16,12 +16,48 @@ const getById = async (req, res) => {
 
 const create = async (req, res) => {
   const { name } = req.body;
+  if (!name) {
+    return res.status(400).json({ message: '"name" is required' });
+  }
+  if (name.length < 5) {
+    return res.status(422).json({ 
+      message: '"name" length must be at least 5 characters long' });
+  }
   const { status, data } = await productService.create(name);
   return res.status(mapHtppStatus(status)).json(data);
+};
+
+const update = async (req, res) => {
+  const { id } = req.params;
+  const { name } = req.body;
+  if (!name) {
+    return res
+      .status(400)
+      .json({ message: '"name" is required' });
+  }
+
+  if (name.length < 5) {
+    return res.status(422).json({
+      message: '"name" length must be at least 5 characters long',
+    });
+  }
+  const { status, data } = await productService.update(id, name);
+  return res.status(mapHtppStatus(status)).json(data);
+};
+
+const remove = async (req, res) => {
+  const { id } = req.params;
+  const { status, data } = await productService.remove(id);
+  if (status !== 'NO_CONTENT') {
+    return res.status(mapHtppStatus(status)).json(data);
+  }
+  res.status(mapHtppStatus(status)).end();
 };
 
 module.exports = {
   getAll,
   getById,
   create,
+  update,
+  remove,
 };

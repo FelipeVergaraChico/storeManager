@@ -1,7 +1,7 @@
 const { expect } = require('chai');
 const sinon = require('sinon');
 const connection = require('../../../src/models/connection');
-const { mockProducts, mockProductsById, productNotFound } = require('../mocks/product.mock');
+const { mockProducts, mockProductsById, productNotFound, mockCreate, mockCreateErr } = require('../mocks/product.mock');
 const productsModel = require('../../../src/models/products/productsStoreModel');
 
 describe('Testa o model de produtos', function () {
@@ -29,6 +29,23 @@ describe('Testa o model de produtos', function () {
     const product = await productsModel.findById(id);
     expect(product).to.be.an('object');
     expect(product).to.deep.equal(productNotFound);
+  });
+  it('Cria um produto', async function () {
+    sinon.stub(connection, 'execute').resolves([mockCreate]);
+    const namme = 'Arthur';
+    const data = await productsModel.createModel(namme);
+    expect(data).to.deep.equal(mockCreate);
+    expect(data).to.be.an('object');
+  });
+  it('Retorna um erro caso não tenha nome', async function () {
+    sinon.stub(connection, 'execute').resolves([mockCreateErr]);
+    const data = await productsModel.createModel('ar');
+    expect(data).to.deep.equal(mockCreateErr);
+  });
+  it('Produto deve ser deletado', async function () {
+    const del = sinon.stub(connection, 'execute').resolves([{ insertId: 1 }]);
+    await productsModel.removeModel(1);
+    expect(del).to.have.calledWith();
   });
   afterEach(function () {
     sinon.restore();

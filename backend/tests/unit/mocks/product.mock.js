@@ -13,6 +13,23 @@ const mockProducts = [
   },
 ];
 
+const mockCreate = {
+  id: 4,
+  name: 'Arthur',
+};
+
+const mockCreateStatus = {
+  status: 'CREATED',
+  data: mockCreate,
+};
+
+const mockCreateErr = {
+  message: '"name" is required',
+};
+const mockCreateErrLeng = {
+  message: '"name" length must be at least 5 characters long',
+};
+
 const mockProductsStatus = {
   status: 'SUCCESSFULL',
   data: mockProducts,
@@ -31,6 +48,18 @@ const productNotFound = {
   status: 'NOT_FOUND',
   data: { message: 'Product not found' },
 };
+const productNotFoundStatus = {
+  message: 'Product not found',
+};
+const mockUpdate = {
+  id: 1,
+  name: 'Tesoura',
+};
+
+const mockUpdateFail = {
+  id: 19,
+  name: 'Tesoura',
+};
 
 module.exports = {
   mockProducts,
@@ -38,4 +67,11 @@ module.exports = {
   mockProductsById,
   mockProductsByIdStatus,
   productNotFound,
+  mockCreate,
+  mockCreateErr,
+  mockCreateErrLeng,
+  mockCreateStatus,
+  productNotFoundStatus,
+  mockUpdate,
+  mockUpdateFail,
 };

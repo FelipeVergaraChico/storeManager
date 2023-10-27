@@ -4,6 +4,7 @@ const httpStatus = {
   NOT_FOUND: 404,
   INVALID_DATA: 422,
   CREATED: 201,
+  NO_CONTENT: 204,
 };
 
 const mapHtppStatus = (status) => httpStatus[status] || 500;

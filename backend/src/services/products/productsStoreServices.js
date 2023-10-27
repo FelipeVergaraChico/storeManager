@@ -19,8 +19,31 @@ const create = async (name) => {
   return { status: 'CREATED', data };
 };
 
+const update = async (id, name) => {
+  const product = await productsModel.findById(id);
+  if (!product) {
+    return { status: 'NOT_FOUND', data: { message: 'Product not found' } };
+  }
+  await productsModel.updateMOdel(id, name);
+  const data = await productsModel.findById(id);
+  return { status: 'SUCCESFULL', data };
+};
+
+const remove = async (id) => {
+  const product = await productsModel.findById(id);
+  if (!product) {
+    return {
+      status: 'NOT_FOUND',
+      data: { message: 'Product not found' },
+    };
+  }
+  await productsModel.removeModel(id);
+  return { status: 'NO_CONTENT' };
+};
 module.exports = {
   getAll,
   getById,
   create,
+  update,
+  remove,
 };
